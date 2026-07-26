@@ -45,6 +45,11 @@ export async function getInsights(userId: string) {
     return daysSince >= UNUSED_THRESHOLD_DAYS;
   });
 
+  const potentialMonthlySavings = unused.reduce(
+    (sum, s) => sum + toMonthlyCost(s.cost, s.billingCycle),
+    0
+  );
+
   const mostExpensive = data.length
     ? data.reduce((max, s) =>
         toMonthlyCost(s.cost, s.billingCycle) > toMonthlyCost(max.cost, max.billingCycle) ? s : max
@@ -89,6 +94,7 @@ export async function getInsights(userId: string) {
   return {
     subscriptions: data,
     unused,
+    potentialMonthlySavings,
     mostExpensive,
     topCategory,
     categoryDeltas,
