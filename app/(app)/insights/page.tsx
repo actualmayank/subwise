@@ -4,15 +4,22 @@ import { getInsights } from "@/lib/insights";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, toMonthlyCost, CATEGORY_LABELS } from "@/lib/subscription-utils";
-import { Lightbulb, TrendingUp, AlertCircle, Crown } from "lucide-react";
+import { Lightbulb, TrendingUp, AlertCircle, Crown, PiggyBank } from "lucide-react";
 import { MarkUsedButton } from "@/components/mark-used-button";
 
 export default async function InsightsPage() {
   const session = await auth();
   const user = await prisma.user.findUniqueOrThrow({ where: { id: session!.user.id } });
   const currency = user.currencyPreference;
-  const { subscriptions, unused, mostExpensive, topCategory, categoryDeltas, suggestions } =
-    await getInsights(user.id);
+  const {
+    subscriptions,
+    unused,
+    potentialMonthlySavings,
+    mostExpensive,
+    topCategory,
+    categoryDeltas,
+    suggestions,
+  } = await getInsights(user.id);
 
   if (subscriptions.length === 0) {
     return (
@@ -35,7 +42,30 @@ export default async function InsightsPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Card>
+          <CardHeader className="flex flex-row items-center gap-2 pb-2">
+            <PiggyBank className="h-4 w-4 text-primary" />
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Potential monthly savings
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {potentialMonthlySavings > 0 ? (
+              <>
+                <div className="text-xl font-semibold">
+                  {formatCurrency(potentialMonthlySavings, currency)}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {formatCurrency(potentialMonthlySavings * 12, currency)}/yr if cancelled
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground">No savings flagged</p>
+            )}
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader className="flex flex-row items-center gap-2 pb-2">
             <Crown className="h-4 w-4 text-primary" />
