@@ -33,14 +33,14 @@ export default function SignupPage() {
         <form action={formAction} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" placeholder="Ada Lovelace" required autoComplete="name" />
+            <Input id="name" name="name" required autoComplete="name" />
             {state.fieldErrors?.name && (
               <p className="text-sm text-destructive">{state.fieldErrors.name[0]}</p>
             )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" placeholder="you@example.com" required autoComplete="email" />
+            <Input id="email" name="email" type="email" required autoComplete="email" />
             {state.fieldErrors?.email && (
               <p className="text-sm text-destructive">{state.fieldErrors.email[0]}</p>
             )}

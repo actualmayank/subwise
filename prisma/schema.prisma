@@ -25,13 +25,19 @@ enum BillingCycle {
   yearly
 }
 
+enum ThemeMode {
+  light
+  dark
+}
+
 model User {
-  id                 String   @id @default(cuid())
+  id                 String    @id @default(cuid())
   name               String
-  email              String   @unique
+  email              String    @unique
   passwordHash       String
-  currencyPreference String   @default("USD")
-  createdAt          DateTime @default(now())
+  currencyPreference String    @default("USD")
+  theme              ThemeMode @default(dark)
+  createdAt          DateTime  @default(now())
 
   subscriptions Subscription[]
 }

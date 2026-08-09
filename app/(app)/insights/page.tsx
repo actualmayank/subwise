@@ -26,7 +26,7 @@ export default async function InsightsPage() {
       <div className="flex flex-col items-center justify-center gap-2 py-24 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">No insights yet</h1>
         <p className="max-w-sm text-sm text-muted-foreground">
-          Add a few subscriptions and check back — we&apos;ll surface spending patterns and
+          Add a few subscriptions and check back, we&apos;ll surface spending patterns and
           suggestions here.
         </p>
       </div>
@@ -121,7 +121,7 @@ export default async function InsightsPage() {
         <CardContent>
           {suggestions.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              Nothing stands out right now — your spending looks steady.
+              Nothing stands out right now, your spending looks steady.
             </p>
           ) : (
             <ul className="space-y-3">
@@ -144,7 +144,7 @@ export default async function InsightsPage() {
         <CardContent>
           {unused.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              Nothing flagged — mark subscriptions as used from time to time to keep this accurate.
+              Nothing flagged, mark subscriptions as used from time to time to keep this accurate.
             </p>
           ) : (
             <ul className="divide-y divide-border">

@@ -1,15 +1,22 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
 import { SidebarNav } from "@/components/sidebar-nav";
 import { BottomNav } from "@/components/bottom-nav";
 import { LogoutButton } from "@/components/logout-button";
 import { RenewalBanner } from "@/components/renewal-banner";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Logo } from "@/components/logo";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
   if (!session?.user) {
+    redirect("/login");
+  }
+
+  const userExists = await prisma.user.findUnique({ where: { id: session.user.id } });
+  if (!userExists) {
     redirect("/login");
   }
 
@@ -25,8 +32,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <div className="flex min-h-screen flex-1">
       <aside className="hidden w-60 shrink-0 flex-col border-r border-border bg-sidebar px-4 py-6 sm:flex">
-        <Link href="/dashboard" className="mb-8 px-2 text-lg font-semibold tracking-tight">
-          Sub<span className="text-primary">wise</span>
+        <Link href="/dashboard" className="mb-8 px-2">
+          <Logo height={20} />
         </Link>
         <SidebarNav />
         <div className="mt-auto flex items-center gap-3 border-t border-border pt-4">
@@ -43,8 +50,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center justify-between border-b border-border px-4 py-3 sm:hidden">
-          <Link href="/dashboard" className="text-lg font-semibold tracking-tight">
-            Sub<span className="text-primary">wise</span>
+          <Link href="/dashboard">
+            <Logo height={20} />
           </Link>
           <LogoutButton />
         </header>
