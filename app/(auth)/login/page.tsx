@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { GoogleSignInButton } from "@/components/google-signin-button";
 
 const initialState: ActionState = {};
 
@@ -49,6 +50,7 @@ export default function LoginPage() {
           {state.error && <p className="text-sm text-destructive">{state.error}</p>}
           <SubmitButton />
         </form>
+        <GoogleSignInButton />
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link href="/signup" className="text-primary underline underline-offset-4">

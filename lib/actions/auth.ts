@@ -56,6 +56,10 @@ export async function signupAction(_prevState: ActionState, formData: FormData):
   return {};
 }
 
+export async function googleSignInAction() {
+  await signIn("google", { redirectTo: "/dashboard" });
+}
+
 export async function loginAction(_prevState: ActionState, formData: FormData): Promise<ActionState> {
   const email = formData.get("email");
   const password = formData.get("password");
